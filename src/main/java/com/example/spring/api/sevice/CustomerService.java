@@ -19,6 +19,9 @@ public class CustomerService {
     @Autowired
     CustomerRepository repo;
 
+    /*
+    ADD customers
+     */
     public Object addCustomer(Customer customer){
         repo.save(customer);
         return ResponseEntity.status(HttpStatus.OK).build();
@@ -29,6 +32,9 @@ public class CustomerService {
          return ResponseEntity.status(HttpStatus.OK).body(repo.findAll());
     }
 
+    /*
+   GET customers
+    */
     public List<Customer> getAll() {
         return repo.findAll();
     }
