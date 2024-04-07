@@ -1,6 +1,7 @@
 package com.example.spring.api.sevice;
 
 import com.example.spring.api.entity.Customer;
+import com.example.spring.api.exception.CustomerNotFoundException;
 import com.example.spring.api.repository.CustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -12,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class CustomerService {
@@ -57,8 +59,12 @@ public class CustomerService {
     }
 
 
-    public ResponseEntity<Object> getCustomerById(int id) {
-        return ResponseEntity.status(HttpStatus.OK).body(repo.findById(id));
+    public ResponseEntity<Object> getCustomerById(int id) throws CustomerNotFoundException{
+        List<Customer> res=repo.findById(id);
+        if(res!=null){
+            return ResponseEntity.status(HttpStatus.OK).body(repo.findById(id));
+        }
+        throw  new CustomerNotFoundException("Customer not found for ID "+id);
     }
 
     public ResponseEntity<Object> updateCustomer(int id) {
