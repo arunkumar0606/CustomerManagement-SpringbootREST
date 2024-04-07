@@ -2,6 +2,7 @@ package com.example.spring.api.controller;
 
 import com.example.spring.api.entity.Customer;
 import com.example.spring.api.sevice.CustomerService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
@@ -16,12 +17,12 @@ public class CustomerController {
     CustomerService customerService;
 
     @PostMapping("/addcustomer")
-    public Object addcustomer(@RequestBody Customer data){
+    public Object addcustomer(@RequestBody @Valid Customer data){
         return customerService.addCustomer(data);
     }
 
     @PostMapping("/addcustomers")
-    public ResponseEntity<Object> addcustomers(@RequestBody List<Customer> datas){
+    public ResponseEntity<Object> addcustomers(@RequestBody @Valid List<Customer> datas){
         return customerService.addCustomers(datas);
 
     }
