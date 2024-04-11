@@ -30,4 +30,11 @@ public class GlobalExceptionHandler{
         String errors =ex.getLocalizedMessage();
         return new ResponseEntity<>(errors,HttpStatus.BAD_REQUEST);
     }
+
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(EmailAlreadyExistException.class)
+    public ResponseEntity<Object> errorHandler(EmailAlreadyExistException ex, WebRequest wr){
+        String errors =ex.getLocalizedMessage();
+        return new ResponseEntity<>(errors,HttpStatus.BAD_REQUEST);
+    }
 }

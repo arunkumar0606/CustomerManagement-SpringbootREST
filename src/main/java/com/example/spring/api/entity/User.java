@@ -2,7 +2,7 @@ package com.example.spring.api.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -15,12 +15,14 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private  Long id;
-    @NotNull
+    @NotBlank(message = "Name should not be null")
     private String name;
     @Column(unique = true)
+    @Email(message = "Please Enter Valid email")
     private String email;
 
     @JsonIgnore
+    @Size(min = 5,message = "Password should be atleast 5 Characters Long")
     private String password;
 
     private int age;
