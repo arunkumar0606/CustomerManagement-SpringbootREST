@@ -17,4 +17,8 @@ public interface CustomerRepository extends JpaRepository<Customer, Integer> {
     List<Customer> findByNameLike(String name);
 
     List<Customer> findByNameStartingWith(String name);
+
+    boolean existsByRollNo(int rollno);
+
+    void deleteByRollNo(int rollno);
 }

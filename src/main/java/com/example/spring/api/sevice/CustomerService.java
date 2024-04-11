@@ -24,9 +24,8 @@ public class CustomerService {
     /*
     ADD customers
      */
-    public Object addCustomer(Customer customer){
-        repo.save(customer);
-        return ResponseEntity.status(HttpStatus.OK).build();
+    public Customer addCustomer(Customer customer){
+        return repo.save(customer);
     }
 
     public ResponseEntity<Object> addCustomers(List<Customer> customers){
@@ -103,5 +102,24 @@ public class CustomerService {
 
     public ResponseEntity<Object> getCustomerByName(String name) {
         return ResponseEntity.status(HttpStatus.OK).body(repo.findByNameStartingWith(name));
+    }
+
+    public void deleteCustomerByRollNo(int rollno) {
+        if(repo.existsById(rollno)){
+            repo.deleteById(rollno);
+        }
+        else {
+            throw new CustomerNotFoundException("Id not found");
+        }
+    }
+
+    public void deleteCustomerByname(String name) {
+        List<Customer> c=repo.findByNameStartingWith(name);
+        if(!c.isEmpty()){
+            repo.deleteAll(c);
+        }
+        else {
+            throw new CustomerNotFoundException("Name not found");
+        }
     }
 }

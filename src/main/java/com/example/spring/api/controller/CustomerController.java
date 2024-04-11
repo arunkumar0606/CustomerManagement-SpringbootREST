@@ -5,6 +5,7 @@ import com.example.spring.api.sevice.CustomerService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,7 +17,13 @@ public class CustomerController {
     @Autowired
     CustomerService customerService;
 
+
+    @GetMapping("/about")
+    public String hello(){
+        return "Hello !";
+    }
     @PostMapping("/addcustomer")
+    @ResponseStatus(HttpStatus.CREATED)
     public Object addcustomer(@RequestBody @Valid Customer data){
         return customerService.addCustomer(data);
     }
@@ -82,9 +89,21 @@ public class CustomerController {
         return customerService.updateCustomerByBody(data,id);
     }
 
+    /*
+    Delete
+     */
 
-    @GetMapping("/about")
-    public String hello(){
-        return "Hello !";
+
+    @DeleteMapping("/deleteCustomerById/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteCustomer(@PathVariable int id){
+        customerService.deleteCustomerByRollNo(id);
     }
+
+    @DeleteMapping("/deleteCustomerByName/{name}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteCustomer(@PathVariable String name){
+        customerService.deleteCustomerByname(name);
+    }
+
 }
