@@ -18,4 +18,6 @@ For Creating Users create:
     UserRepository interface
     UserController class
     UserService class
+Add validations and EmailAlreadyExistException class
+
 

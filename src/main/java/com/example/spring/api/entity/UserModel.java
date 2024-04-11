@@ -16,7 +16,7 @@ public class UserModel {
     @Size(min = 5,message = "Password should be atleast 5 Characters Long")
     private String password;
 
-    private Long age=0L;
+    private int age=0;
 
     public String getName() {
         return name;
@@ -42,11 +42,11 @@ public class UserModel {
         this.password = password;
     }
 
-    public Long getAge() {
+    public int getAge() {
         return age;
     }
 
-    public void setAge(Long age) {
+    public void setAge(int age) {
         this.age = age;
     }
 }
