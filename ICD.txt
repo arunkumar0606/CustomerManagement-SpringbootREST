@@ -1,0 +1,21 @@
+Create Mvn project from Spring.io with dependencies (JPA,H2,Web).
+Create :
+    Customer model class
+    CustomerRepository Interface
+    CustomerController class
+    CustomerService class
+Add REST endpoints in controller with the operations required.
+For Hibernate validations add the following dependencies :
+    jaxb-api
+    jakarta.validation-api
+    jakarta.persistence-api
+For exception handling Create :
+    CustomerNotfoundException.class User defined exception
+    GlobalExceptionHandler.class - Global exception class to handle all exceptions
+For Creating Users create:
+    User Entity class
+    UserModel class   (Add @JsonIgnore to Password column)
+    UserRepository interface
+    UserController class
+    UserService class
+
