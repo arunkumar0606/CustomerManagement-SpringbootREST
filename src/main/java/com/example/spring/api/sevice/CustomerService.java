@@ -94,5 +94,14 @@ public class CustomerService {
     }
 
 
+    public ResponseEntity<Object> getCustomerByAge(int age) {
+        if(!repo.existsById(age)){
+            throw new CustomerNotFoundException("Id not found");
+        }
+        return ResponseEntity.status(HttpStatus.OK).body(repo.findByAge(age));
+    }
 
+    public ResponseEntity<Object> getCustomerByName(String name) {
+        return ResponseEntity.status(HttpStatus.OK).body(repo.findByNameStartingWith(name));
+    }
 }

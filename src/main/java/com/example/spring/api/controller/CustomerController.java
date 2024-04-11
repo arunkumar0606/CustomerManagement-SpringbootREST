@@ -58,6 +58,19 @@ public class CustomerController {
     }
 
 
+    /*
+    Filter methods
+     */
+    @GetMapping("/getCustomersbyAge/{age}")
+    public ResponseEntity<Object> getCustomerByAge(@PathVariable int age){
+        return customerService.getCustomerByAge(age);
+    }
+
+    @GetMapping("/getCustomersbyName/{name}")
+    public ResponseEntity<Object> getCustomerByName(@PathVariable String name){
+        return customerService.getCustomerByName(name);
+    }
+
 
     @PutMapping("/addcustomer/update/{id}")
     public ResponseEntity<Object> updateCustomer(@PathVariable int id){
