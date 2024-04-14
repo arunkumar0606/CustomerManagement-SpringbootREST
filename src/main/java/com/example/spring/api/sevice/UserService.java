@@ -7,6 +7,7 @@ import com.example.spring.api.exception.EmailAlreadyExistException;
 import com.example.spring.api.repository.UserRepository;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -15,12 +16,20 @@ public class UserService {
     @Autowired
     private UserRepository userRepository;
 
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
     public User createUser(UserModel userModel){
         if(userRepository.existsByEmail(userModel.getEmail())){
             throw new EmailAlreadyExistException("Email ID is already Registered. Please use different Email");
         }
         User user =new User();
         BeanUtils.copyProperties(userModel, user);
+
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+     //   System.out.println(passwordEncoder.encode(user.getPassword()));
+       // System.out.println(passwordEncoder.matches(user.getPassword(),passwordEncoder.encode(user.getPassword())));
         return userRepository.save(user);
     }
 
@@ -39,7 +48,7 @@ public class UserService {
             User newUser=userRepository.findById(id);
             newUser.setName(userModel.getName());
             newUser.setEmail(userModel.getEmail());
-            newUser.setPassword(userModel.getPassword());
+            newUser.setPassword(passwordEncoder.encode(userModel.getPassword()));
             newUser.setAge(userModel.getAge());
             return userRepository.save(newUser);
         }

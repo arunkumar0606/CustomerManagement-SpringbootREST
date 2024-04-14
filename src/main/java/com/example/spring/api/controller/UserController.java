@@ -14,11 +14,11 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    @PostMapping("/register")
-    @ResponseStatus(HttpStatus.CREATED)
-    public User createUser(@RequestBody @Valid UserModel userModel){
-       return userService.createUser(userModel);
-    }
+//    @PostMapping("/register")
+//    @ResponseStatus(HttpStatus.CREATED)
+//    public User createUser(@RequestBody @Valid UserModel userModel){
+//       return userService.createUser(userModel);
+//    }
 
     @GetMapping("/getUser/{id}")
     public User getUser(@PathVariable  long id){

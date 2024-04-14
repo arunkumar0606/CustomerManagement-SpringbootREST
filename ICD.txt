@@ -4,7 +4,7 @@ Create :
     CustomerRepository Interface
     CustomerController class
     CustomerService class
-Add REST endpoints in controller with the operations required.
+Add REST endpoints in Customer controller with the operations required.
 For Hibernate validations add the following dependencies :
     jaxb-api
     jakarta.validation-api
@@ -19,5 +19,11 @@ For Creating Users create:
     UserController class
     UserService class
 Add validations and EmailAlreadyExistException class
+Add REST endpoints in User controller with the operations required.
+For Security
+    First create Security username and password . For that create CustomUSerDetailsService class
+    Create SecurityConfig class in that :
+        Create SecurityfilterChain bean (Specify urls to be allowed with/without authentication)
+        Create AuthenticationProvider Bean (Specify User credentials and password encoder)
 
 
