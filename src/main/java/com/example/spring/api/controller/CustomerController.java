@@ -17,7 +17,6 @@ public class CustomerController {
     @Autowired
     CustomerService customerService;
 
-
     @GetMapping("/about")
     public String hello(){
         return "Hello !";
