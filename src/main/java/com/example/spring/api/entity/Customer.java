@@ -1,14 +1,16 @@
 package com.example.spring.api.entity;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.annotation.Nonnull;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 import org.springframework.context.annotation.Primary;
 
 import java.sql.Timestamp;
@@ -34,6 +36,12 @@ public class Customer {
     @CreationTimestamp
     private Timestamp time;
 
+    @ManyToOne(fetch = FetchType.LAZY,optional = false)
+    @JoinColumn(name="user_id",nullable = false)
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    @JsonIgnore
+    private User user;
+
     public int getAge() {
         return age;
     }
@@ -58,6 +66,13 @@ public class Customer {
         this.time = time;
     }
 
+    public User getUser() {
+        return user;
+    }
+
+    public  void setUser(User user) {
+        this.user = user;
+    }
 
     public int getRollNo() {
         return rollNo;

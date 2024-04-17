@@ -21,14 +21,21 @@ public class CustomerService {
     @Autowired
     CustomerRepository repo;
 
+    @Autowired
+    UserService userService;
+
     /*
     ADD customers
      */
     public Customer addCustomer(Customer customer){
+        customer.setUser(userService.getLoggedInUser());
         return repo.save(customer);
     }
 
     public ResponseEntity<Object> addCustomers(List<Customer> customers){
+        for (Customer customer:customers) {
+            customer.setUser(userService.getLoggedInUser());
+        }
          repo.saveAll(customers);
          return ResponseEntity.status(HttpStatus.OK).body(repo.findAll());
     }
@@ -44,7 +51,7 @@ public class CustomerService {
         if(repo.findAll().isEmpty()){
             return ResponseEntity.status(HttpStatus.OK).body("No entries found!");
         }
-        return ResponseEntity.status(HttpStatus.OK).body(repo.findAll());
+        return ResponseEntity.status(HttpStatus.OK).body(repo.findByUserId(userService.getLoggedInUser().getId()));
     }
 
     public List<Customer> getCustomersBySort(String field) {
@@ -64,6 +71,17 @@ public class CustomerService {
             return ResponseEntity.status(HttpStatus.OK).body(repo.findById(id));
         }
         throw  new CustomerNotFoundException("Customer not found for ID "+id);
+    }
+
+    public List<Customer> getCustomersByUserId(long userId){
+        return repo.findByUserId(userId);
+    }
+
+    public List<Customer> getCustomersByUserIdAndRollNo(long userId,int rollNo){
+        if(repo.findByUserIdAndRollNo(userId,rollNo).isEmpty()){
+            throw new CustomerNotFoundException("Value not found for the Current User");
+        }
+        return repo.findByUserIdAndRollNo(userId,rollNo);
     }
 
     public ResponseEntity<Object> updateCustomer(int id) {

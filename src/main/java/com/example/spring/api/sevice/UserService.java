@@ -7,6 +7,8 @@ import com.example.spring.api.exception.EmailAlreadyExistException;
 import com.example.spring.api.repository.UserRepository;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -61,6 +63,16 @@ public class UserService {
         }
         else{
             throw new CustomerNotFoundException("Could not find the provided user with used id :"+id);
+        }
+    }
+
+    public User getLoggedInUser(){
+        String userEmail=SecurityContextHolder.getContext().getAuthentication().getName();
+        try {
+            return userRepository.findByEmail(userEmail);
+        }
+        catch (Exception e){
+            throw new CustomerNotFoundException("User not Found : "+userEmail);
         }
     }
 }

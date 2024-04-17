@@ -25,5 +25,8 @@ For Security
     Create SecurityConfig class in that :
         Create SecurityfilterChain bean (Specify urls to be allowed with/without authentication)
         Create AuthenticationProvider Bean (Specify User credentials and password encoder)
+For Mapping User Specific customer data
+     Add @ManyToOne mapping for the Customer to link the tables.
+     Add REST methods to get,post,put and delete data.
 
 

@@ -2,6 +2,7 @@ package com.example.spring.api.controller;
 
 import com.example.spring.api.entity.Customer;
 import com.example.spring.api.sevice.CustomerService;
+import com.example.spring.api.sevice.UserService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
@@ -16,6 +17,9 @@ public class CustomerController {
 
     @Autowired
     CustomerService customerService;
+
+    @Autowired
+    UserService userService;
 
     @GetMapping("/about")
     public String hello(){
@@ -62,6 +66,20 @@ public class CustomerController {
     public ResponseEntity<Object> getCustomerByRp(@RequestParam int id){
         return customerService.getCustomerByRequestParam(id);
     }
+
+    @GetMapping("/getCustomerByUserId")
+    public List<Customer> getCustomerByUserId(){
+        long userId=userService.getLoggedInUser().getId();
+        return customerService.getCustomersByUserId(userId);
+    }
+
+    @GetMapping("/getCustomerByUserIdAndId/{rollNo}")
+    public List<Customer> getCustomerByUserIdAndId(@PathVariable int rollNo){
+        long userId=userService.getLoggedInUser().getId();
+        return customerService.getCustomersByUserIdAndRollNo(userId,rollNo);
+    }
+
+
 
 
     /*

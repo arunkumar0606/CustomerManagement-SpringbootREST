@@ -21,4 +21,9 @@ public interface CustomerRepository extends JpaRepository<Customer, Integer> {
     boolean existsByRollNo(int rollno);
 
     void deleteByRollNo(int rollno);
+
+    List<Customer> findByUserId(long userId);
+
+    List<Customer> findByUserIdAndRollNo(long userId,int rollNo);
+
 }
