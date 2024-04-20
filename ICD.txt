@@ -32,5 +32,8 @@ For JWT
     Add JWT dependency to pom.xml file
     Create a model class JwtResponse to store the token
     Create JwtTokenUtil class to generatetoken
+    Create methods inside tokenutil to get username and isexpired data from token
+    Create another class JwtRequestFilter ,do the validations and set the authentiction to security context.
+    In the SecurityConfig class disable Session by making it "STATELESS" and add the newly created Filter class.
 
 

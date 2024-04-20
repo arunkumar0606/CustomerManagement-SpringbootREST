@@ -1,6 +1,7 @@
 package com.example.spring.api.config;
 
 import com.example.spring.api.sevice.CustomUserDetailsService;
+import com.example.spring.api.util.JwtRequestFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -11,14 +12,18 @@ import org.springframework.security.config.annotation.authentication.configurati
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
 
+    @Autowired
+    JwtRequestFilter requestFilter;
     @Autowired
     private CustomUserDetailsService customUserDetailsService;
     @Bean
@@ -28,12 +33,14 @@ public class SecurityConfig {
                     try {
                         authorize
                                 .requestMatchers("/login","/register","/h2-console/").permitAll()
-                                .anyRequest().authenticated().and().httpBasic();
+                                .anyRequest().authenticated().and()
+                                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
                     } catch (Exception e) {
                         throw new RuntimeException(e);
                     }
                 });
-
+        httpSecurity.addFilterBefore(requestFilter, UsernamePasswordAuthenticationFilter.class);
+        httpSecurity.httpBasic();
         return httpSecurity.build();
     }
 
