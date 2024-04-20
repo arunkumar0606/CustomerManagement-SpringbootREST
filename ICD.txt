@@ -28,5 +28,9 @@ For Security
 For Mapping User Specific customer data
      Add @ManyToOne mapping for the Customer to link the tables.
      Add REST methods to get,post,put and delete data.
+For JWT
+    Add JWT dependency to pom.xml file
+    Create a model class JwtResponse to store the token
+    Create JwtTokenUtil class to generatetoken
 
 
